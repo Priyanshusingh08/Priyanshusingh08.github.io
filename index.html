@@ -11,39 +11,85 @@
     <title>Priyanshu | portfolio</title>
   </head>
   <body>
-    <div id="updateBanner" style="
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: linear-gradient(135deg, #4f46e5, #9333ea);
-  color: white;
-  padding: 12px 40px 12px 16px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-family: Arial, sans-serif;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-  z-index: 9999;
-  opacity: 1;
-  transition: opacity 0.4s ease;
-">
-  ✨ Fully built — updating with latest work soon.
+    <style>
+#update-bar {
+  width:100%; background:#0f0f1a;
+  padding:13px 20px; display:flex;
+  align-items:center; justify-content:space-between;
+  gap:12px; position:relative; overflow:hidden;
+  font-family:sans-serif;
+}
+.shimmer {
+  position:absolute; inset:0; overflow:hidden; pointer-events:none;
+}
+.shimmer::after {
+  content:''; position:absolute; top:0; left:-60%; width:40%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(127,119,221,.07),transparent);
+  animation:shimmer 3.5s ease-in-out infinite;
+}
+@keyframes shimmer{0%{left:-60%}100%{left:130%}}
+.pulse-ring {
+  position:relative; width:14px; height:14px; flex-shrink:0;
+}
+.ring {
+  position:absolute; inset:0; border-radius:50%;
+  border:1.5px solid #5DCAA5; opacity:0;
+  animation:ring-out 2s ease-out infinite;
+}
+.ring2{animation-delay:.6s}
+.dot-core {
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:7px; height:7px; border-radius:50%; background:#5DCAA5;
+}
+@keyframes ring-out{0%{transform:scale(.5);opacity:.8}100%{transform:scale(2.2);opacity:0}}
+.bar-msg { font-size:13px; color:rgba(220,215,255,.8); flex:1; }
+.bar-msg strong { color:#fff; font-weight:500; }
+.tag-pill {
+  font-size:11px; padding:4px 12px; border-radius:20px;
+  background:rgba(93,202,165,.12);
+  border:.5px solid rgba(93,202,165,.35);
+  color:#5DCAA5; white-space:nowrap;
+  position:relative; overflow:hidden;
+}
+.tag-pill::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,transparent 30%,rgba(93,202,165,.18) 50%,transparent 70%);
+  animation:tag-glow 2.5s ease-in-out infinite;
+}
+@keyframes tag-glow{0%,100%{transform:translateX(-100%)}50%{transform:translateX(100%)}}
+.bar-close {
+  background:none; border:none; color:rgba(220,215,255,.35);
+  cursor:pointer; font-size:16px; padding:3px 5px;
+  border-radius:4px; transition:color .15s,transform .15s;
+}
+.bar-close:hover{color:rgba(220,215,255,.7);transform:rotate(90deg)}
+#update-bar.dismissed{animation:slide-up .4s forwards}
+@keyframes slide-up{to{opacity:0;transform:translateY(-10px);max-height:0;padding:0}}
+</style>
 
-  <span onclick="
-      var banner = document.getElementById('updateBanner');
-      banner.style.opacity='0';
-      setTimeout(function(){ banner.style.display='none'; }, 400);
-    " 
-    style="
-      position: absolute;
-      top: 6px;
-      right: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 14px;
-    ">
-    ×
-  </span>
+<div id="update-bar">
+  <div class="shimmer"></div>
+  <div style="display:flex;align-items:center;gap:10px;flex:1">
+    <div class="pulse-ring">
+      <div class="ring"></div>
+      <div class="ring ring2"></div>
+      <div class="dot-core"></div>
+    </div>
+    <p class="bar-msg">
+      <strong>Exciting updates coming soon</strong>
+      — new work, new look on the way.
+    </p>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <span class="tag-pill">Stay tuned</span>
+    <button class="bar-close"
+      onclick="this.closest('#update-bar').classList.add('dismissed')">
+      &#x2715;
+    </button>
+  </div>
 </div>
+  
     <div class="cursor" id="cursor"></div>
     <nav id="nav">
       <h1>
