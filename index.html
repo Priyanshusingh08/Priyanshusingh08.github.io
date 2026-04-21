@@ -12,81 +12,86 @@
   </head>
   <body>
   
-
+<!-- paste right after your opening <body> tag -->
 <style>
 #update-bar {
-  width:100%; background:#0f0f1a;
-  padding:13px 20px; display:flex;
-  align-items:center; justify-content:space-between;
-  gap:12px; position:relative; overflow:hidden;
-  font-family:sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  width: 100%;
+  background: #0f0f1a;
+  padding: 11px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  overflow: hidden;
+  font-family: sans-serif;
 }
-.shimmer {
-  position:absolute; inset:0; overflow:hidden; pointer-events:none;
+.ub-shimmer {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
 }
-.shimmer::after {
-  content:''; position:absolute; top:0; left:-60%; width:40%; height:100%;
-  background:linear-gradient(90deg,transparent,rgba(127,119,221,.07),transparent);
-  animation:shimmer 3.5s ease-in-out infinite;
+.ub-shimmer::after {
+  content: ''; position: absolute; top: 0; left: -60%;
+  width: 40%; height: 100%;
+  background: linear-gradient(90deg,transparent,rgba(127,119,221,.08),transparent);
+  animation: ub-shimmer 3.5s ease-in-out infinite;
 }
-@keyframes shimmer{0%{left:-60%}100%{left:130%}}
-.pulse-ring {
-  position:relative; width:14px; height:14px; flex-shrink:0;
+@keyframes ub-shimmer { 0%{left:-60%} 100%{left:130%} }
+.ub-ring-wrap { position: relative; width: 14px; height: 14px; flex-shrink: 0; }
+.ub-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 1.5px solid #5DCAA5; opacity: 0;
+  animation: ub-ring 2s ease-out infinite;
 }
-.ring {
-  position:absolute; inset:0; border-radius:50%;
-  border:1.5px solid #5DCAA5; opacity:0;
-  animation:ring-out 2s ease-out infinite;
+.ub-ring2 { animation-delay: .6s; }
+.ub-dot {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 7px; height: 7px; border-radius: 50%; background: #5DCAA5;
 }
-.ring2{animation-delay:.6s}
-.dot-core {
-  position:absolute; top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  width:7px; height:7px; border-radius:50%; background:#5DCAA5;
+@keyframes ub-ring { 0%{transform:scale(.5);opacity:.8} 100%{transform:scale(2.2);opacity:0} }
+.ub-msg { font-size: 13px; color: rgba(220,215,255,.8); flex: 1; }
+.ub-msg strong { color: #fff; font-weight: 500; }
+.ub-tag {
+  font-size: 11px; padding: 3px 11px; border-radius: 20px;
+  background: rgba(93,202,165,.12); border: .5px solid rgba(93,202,165,.35);
+  color: #5DCAA5; white-space: nowrap; position: relative; overflow: hidden;
+  flex-shrink: 0;
 }
-@keyframes ring-out{0%{transform:scale(.5);opacity:.8}100%{transform:scale(2.2);opacity:0}}
-.bar-msg { font-size:13px; color:rgba(220,215,255,.8); flex:1; }
-.bar-msg strong { color:#fff; font-weight:500; }
-.tag-pill {
-  font-size:11px; padding:4px 12px; border-radius:20px;
-  background:rgba(93,202,165,.12);
-  border:.5px solid rgba(93,202,165,.35);
-  color:#5DCAA5; white-space:nowrap;
-  position:relative; overflow:hidden;
+.ub-tag::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg,transparent 30%,rgba(93,202,165,.18) 50%,transparent 70%);
+  animation: ub-glow 2.5s ease-in-out infinite;
 }
-.tag-pill::after {
-  content:''; position:absolute; inset:0;
-  background:linear-gradient(90deg,transparent 30%,rgba(93,202,165,.18) 50%,transparent 70%);
-  animation:tag-glow 2.5s ease-in-out infinite;
+@keyframes ub-glow { 0%,100%{transform:translateX(-100%)} 50%{transform:translateX(100%)} }
+.ub-close {
+  background: none; border: none; color: rgba(220,215,255,.35);
+  cursor: pointer; font-size: 16px; padding: 3px 5px; border-radius: 4px;
+  transition: color .15s, transform .15s; flex-shrink: 0;
 }
-@keyframes tag-glow{0%,100%{transform:translateX(-100%)}50%{transform:translateX(100%)}}
-.bar-close {
-  background:none; border:none; color:rgba(220,215,255,.35);
-  cursor:pointer; font-size:16px; padding:3px 5px;
-  border-radius:4px; transition:color .15s,transform .15s;
-}
-.bar-close:hover{color:rgba(220,215,255,.7);transform:rotate(90deg)}
-#update-bar.dismissed{animation:slide-up .4s forwards}
-@keyframes slide-up{to{opacity:0;transform:translateY(-10px);max-height:0;padding:0}}
+.ub-close:hover { color: rgba(220,215,255,.75); transform: rotate(90deg); }
+#update-bar.hide { animation: ub-hide .4s forwards; }
+@keyframes ub-hide { to { opacity:0; max-height:0; padding:0; } }
 </style>
 
 <div id="update-bar">
-  <div class="shimmer"></div>
-  <div style="display:flex;align-items:center;gap:10px;flex:1">
-    <div class="pulse-ring">
-      <div class="ring"></div>
-      <div class="ring ring2"></div>
-      <div class="dot-core"></div>
+  <div class="ub-shimmer"></div>
+  <div style="display:flex;align-items:center;gap:10px;flex:1;position:relative;z-index:1">
+    <div class="ub-ring-wrap">
+      <div class="ub-ring"></div>
+      <div class="ub-ring ub-ring2"></div>
+      <div class="ub-dot"></div>
     </div>
-    <p class="bar-msg">
+    <p class="ub-msg">
       <strong>Exciting updates coming soon</strong>
       — new work, new look on the way.
     </p>
   </div>
-  <div style="display:flex;align-items:center;gap:8px">
-    <span class="tag-pill">Stay tuned</span>
-    <button class="bar-close"
-      onclick="this.closest('#update-bar').classList.add('dismissed')">
+  <div style="display:flex;align-items:center;gap:8px;position:relative;z-index:1">
+    <span class="ub-tag">Stay tuned</span>
+    <button class="ub-close"
+      onclick="document.getElementById('update-bar').classList.add('hide')">
       &#x2715;
     </button>
   </div>
