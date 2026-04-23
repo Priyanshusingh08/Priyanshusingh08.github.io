@@ -370,25 +370,55 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
 .cert-info p{font-size:0.75rem;color:var(--teal);}
 .about-visual{position:relative;display:flex;justify-content:center;}
 .about-img-wrap{
-  width:320px;height:380px;border-radius:24px;
+  width:320px;
+  height:380px;
+  border-radius:24px;
   border:1px solid var(--border);
   background:linear-gradient(135deg,var(--bg3),var(--bg2));
-  position:relative;overflow:hidden;
+  position:relative;
+  overflow:hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.about-img-placeholder{
-  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-  font-size:5rem;opacity:0.15;
+.about-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  border-radius: 24px;
+  transition: transform 0.4s ease;
+}
+.about-img-wrap:hover img {
+  transform: scale(1.02);
 }
 .about-float-badge{
-  position:absolute;bottom:-1rem;right:-1rem;
-  background:var(--bg3);border:1px solid var(--border-h);border-radius:16px;
-  padding:1rem 1.4rem;text-align:center;
+  position:absolute;
+  bottom:-1rem;
+  right:-1rem;
+  background:var(--bg3);
+  border:1px solid var(--border-h);
+  border-radius:16px;
+  padding:1rem 1.4rem;
+  text-align:center;
   box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  z-index: 2;
 }
 .about-float-badge .num{
-  font-family:var(--head);font-size:2rem;font-weight:700;color:var(--purple-light);display:block;
+  font-family:var(--head);
+  font-size:2rem;
+  font-weight:700;
+  color:var(--purple-light);
+  display:block;
 }
-.about-float-badge .lbl{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;}
+.about-float-badge .lbl{
+  font-size:0.72rem;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+}
 
 /* ─── SKILLS ─────────────────────────────────── */
 #skills{background:var(--bg2);}
@@ -554,7 +584,11 @@ footer a{color:var(--purple);text-decoration:none;}
   
   <section id="hero"><div class="hero-grid-bg"></div><div class="hero-inner"><div class="hero-badge">Salesforce Developer · Open to Opportunities</div><h1 class="hero-title"><span class="line"><span class="word">Building</span> <span class="word grad">enterprise</span></span><span class="line"><span class="word">Salesforce</span> <span class="word">solutions</span></span><span class="line"><span class="word">that</span> <span class="word grad">scale.</span></span></h1><p class="hero-sub">Hi, I'm <strong>Priyanshu Singh</strong> — a Salesforce Developer with <strong>2+ years</strong> of hands-on experience in Sales Cloud, Service Cloud, LWC, and Apex. Certified <strong>Salesforce AI Associate & AI Specialist.</strong></p><div class="hero-actions"><a href="#experience" class="btn-primary">View My Work</a><a href="#contact" class="btn-outline">Get In Touch</a></div><div class="hero-stats stagger"><div class="stat-item"><span class="stat-num" data-count="2">0</span><span class="stat-label">Years Experience</span></div><div class="stat-item"><span class="stat-num" data-count="6">0</span><span class="stat-label">Projects Delivered</span></div><div class="stat-item"><span class="stat-num" data-count="2">0</span><span class="stat-label">Certifications</span></div></div></div><div class="hero-scroll"><div class="scroll-line"></div><span>Scroll</span></div></section>
   
-  <section id="about"><div class="container"><div class="section-label">About Me</div><div class="about-grid"><div class="about-text reveal"><h2 class="section-title">Passionate about<br>solving real problems<br>on Salesforce.</h2><p>I'm a <strong>Salesforce Developer & Support Engineer</strong> with 2+ years of experience building and supporting enterprise-grade applications across Sales Cloud, Service Cloud, and Experience Cloud.</p><p>My work spans <strong>LWC development</strong>, complex <strong>Apex logic</strong>, third-party <strong>API integrations</strong>, and end-to-end automation using Flows and triggers. I've worked on everything from e-commerce portals to file management systems and real-time user tracking.</p><p>I'm also a <strong>Salesforce Certified AI Associate and AI Specialist</strong>, staying ahead of the curve in intelligent automation and AI-driven CRM solutions.</p><div class="cert-grid stagger"><div class="cert-card"><div class="cert-icon">🏅</div><div class="cert-info"><h4>Salesforce Certified AI Associate</h4><p>Salesforce · Verified</p></div></div><div class="cert-card"><div class="cert-icon">🏅</div><div class="cert-info"><h4>Salesforce Certified AI Specialist</h4><p>Salesforce · Verified</p></div></div></div></div><div class="about-visual reveal-right"><div class="about-img-wrap"><div class="about-img-placeholder">👨‍💻</div></div><div class="about-float-badge"><span class="num">2+</span><span class="lbl">Years on Salesforce</span></div></div></div></div></section>
+  <section id="about"><div class="container"><div class="section-label">About Me</div><div class="about-grid"><div class="about-text reveal"><h2 class="section-title">Passionate about<br>solving real problems<br>on Salesforce.</h2><p>I'm a <strong>Salesforce Developer & Support Engineer</strong> with 2+ years of experience building and supporting enterprise-grade applications across Sales Cloud, Service Cloud, and Experience Cloud.</p><p>My work spans <strong>LWC development</strong>, complex <strong>Apex logic</strong>, third-party <strong>API integrations</strong>, and end-to-end automation using Flows and triggers. I've worked on everything from e-commerce portals to file management systems and real-time user tracking.</p><p>I'm also a <strong>Salesforce Certified AI Associate and AI Specialist</strong>, staying ahead of the curve in intelligent automation and AI-driven CRM solutions.</p><div class="cert-grid stagger"><div class="cert-card"><div class="cert-icon">🏅</div><div class="cert-info"><h4>Salesforce Certified AI Associate</h4><p>Salesforce · Verified</p></div></div><div class="cert-card"><div class="cert-icon">🏅</div><div class="cert-info"><h4>Salesforce Certified AI Specialist</h4><p>Salesforce · Verified</p></div></div></div></div><div class="about-visual reveal-right"><div class="about-img-wrap">
+            <img src="./images/mypic.png"
+                 alt="Priyanshu Singh"
+                 style="width:100%; height:100%; object-fit:cover; object-position:center 30%;">
+          </div><div class="about-float-badge"><span class="num">2+</span><span class="lbl">Years on Salesforce</span></div></div></div></div></section>
   
   <section id="skills"><div class="container"><div class="section-label reveal">Skills & Technologies</div><h2 class="section-title reveal">My arsenal of<br>proficiencies</h2></div><div class="skills-wrap" style="margin-top:3rem;"><div class="marquee-row"><div class="marquee-inner"><div class="skill-pill"><span class="dot"></span>Sales Cloud</div><div class="skill-pill"><span class="dot"></span>Service Cloud</div><div class="skill-pill teal"><span class="dot"></span>Experience Cloud</div><div class="skill-pill"><span class="dot"></span>Lightning Web Components</div><div class="skill-pill teal"><span class="dot"></span>Apex Triggers</div><div class="skill-pill"><span class="dot"></span>Batch Apex</div><div class="skill-pill gold"><span class="dot"></span>Salesforce Flows</div><div class="skill-pill"><span class="dot"></span>REST API</div><div class="skill-pill teal"><span class="dot"></span>SOAP API</div><div class="skill-pill"><span class="dot"></span>Data Loader</div><div class="skill-pill gold"><span class="dot"></span>Platform Events</div><div class="skill-pill"><span class="dot"></span>Visualforce</div><div class="skill-pill"><span class="dot"></span>Sales Cloud</div><div class="skill-pill"><span class="dot"></span>Service Cloud</div><div class="skill-pill teal"><span class="dot"></span>Experience Cloud</div><div class="skill-pill"><span class="dot"></span>Lightning Web Components</div><div class="skill-pill teal"><span class="dot"></span>Apex Triggers</div><div class="skill-pill"><span class="dot"></span>Batch Apex</div><div class="skill-pill gold"><span class="dot"></span>Salesforce Flows</div><div class="skill-pill"><span class="dot"></span>REST API</div><div class="skill-pill teal"><span class="dot"></span>SOAP API</div><div class="skill-pill"><span class="dot"></span>Data Loader</div><div class="skill-pill gold"><span class="dot"></span>Platform Events</div><div class="skill-pill"><span class="dot"></span>Visualforce</div></div></div><div class="marquee-row"><div class="marquee-inner rev"><div class="skill-pill gold"><span class="dot"></span>Custom Metadata</div><div class="skill-pill"><span class="dot"></span>Custom Labels</div><div class="skill-pill teal"><span class="dot"></span>Reports & Dashboards</div><div class="skill-pill"><span class="dot"></span>Approval Processes</div><div class="skill-pill gold"><span class="dot"></span>Validation Rules</div><div class="skill-pill"><span class="dot"></span>Profiles & Permission Sets</div><div class="skill-pill teal"><span class="dot"></span>Role Hierarchy</div><div class="skill-pill"><span class="dot"></span>VS Code</div><div class="skill-pill gold"><span class="dot"></span>Workbench</div><div class="skill-pill"><span class="dot"></span>Git / Bitbucket</div><div class="skill-pill teal"><span class="dot"></span>CI/CD</div><div class="skill-pill"><span class="dot"></span>Jira</div><div class="skill-pill gold"><span class="dot"></span>Custom Metadata</div><div class="skill-pill"><span class="dot"></span>Custom Labels</div><div class="skill-pill teal"><span class="dot"></span>Reports & Dashboards</div><div class="skill-pill"><span class="dot"></span>Approval Processes</div><div class="skill-pill gold"><span class="dot"></span>Validation Rules</div><div class="skill-pill"><span class="dot"></span>Profiles & Permission Sets</div><div class="skill-pill teal"><span class="dot"></span>Role Hierarchy</div><div class="skill-pill"><span class="dot"></span>VS Code</div><div class="skill-pill gold"><span class="dot"></span>Workbench</div><div class="skill-pill"><span class="dot"></span>Git / Bitbucket</div><div class="skill-pill teal"><span class="dot"></span>CI/CD</div><div class="skill-pill"><span class="dot"></span>Jira</div></div></div><div class="marquee-row"><div class="marquee-inner"><div class="skill-pill"><span class="dot"></span>WhatsApp API</div><div class="skill-pill teal"><span class="dot"></span>Box Integration</div><div class="skill-pill"><span class="dot"></span>Google Drive API</div><div class="skill-pill gold"><span class="dot"></span>Multi-Currency</div><div class="skill-pill"><span class="dot"></span>Multi-Language</div><div class="skill-pill teal"><span class="dot"></span>Translation Workbench</div><div class="skill-pill"><span class="dot"></span>SOQL</div><div class="skill-pill gold"><span class="dot"></span>Queueable Apex</div><div class="skill-pill"><span class="dot"></span>Case Management</div><div class="skill-pill teal"><span class="dot"></span>Queue Monitoring</div><div class="skill-pill"><span class="dot"></span>PDF Generation</div><div class="skill-pill gold"><span class="dot"></span>AI Associate</div><div class="skill-pill"><span class="dot"></span>WhatsApp API</div><div class="skill-pill teal"><span class="dot"></span>Box Integration</div><div class="skill-pill"><span class="dot"></span>Google Drive API</div><div class="skill-pill gold"><span class="dot"></span>Multi-Currency</div><div class="skill-pill"><span class="dot"></span>Multi-Language</div><div class="skill-pill teal"><span class="dot"></span>Translation Workbench</div><div class="skill-pill"><span class="dot"></span>SOQL</div><div class="skill-pill gold"><span class="dot"></span>Queueable Apex</div><div class="skill-pill"><span class="dot"></span>Case Management</div><div class="skill-pill teal"><span class="dot"></span>Queue Monitoring</div><div class="skill-pill"><span class="dot"></span>PDF Generation</div><div class="skill-pill gold"><span class="dot"></span>AI Associate</div></div></div></div></section>
   
