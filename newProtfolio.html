@@ -30,6 +30,149 @@
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--white);font-family:var(--body);overflow-x:hidden;line-height:1.65;}
 
+/* ========== PROFESSIONAL LOADING SCREEN WITH PERSONAL INTRO ========== */
+.loader-screen {
+  position: fixed;
+  inset: 0;
+  background: #07070f;
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2.5rem;
+  transition: opacity 0.6s cubic-bezier(0.2, 0.9, 0.4, 1), visibility 0.6s ease;
+  font-family: var(--head);
+}
+.loader-screen.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  z-index: 2;
+  max-width: 500px;
+  padding: 0 1.5rem;
+}
+.loader-greeting {
+  font-size: 1rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-bottom: 0.25rem;
+}
+.loader-name {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff, var(--purple), var(--teal));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: nameGlow 2s ease infinite alternate;
+  margin-bottom: 0.5rem;
+}
+@keyframes nameGlow {
+  0% { background-position: 0% 50%; filter: brightness(1);}
+  100% { background-position: 100% 50%; filter: brightness(1.2);}
+}
+.loader-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+.loader-title-item {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-family: var(--body);
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+.loader-title-item .bullet {
+  width: 4px;
+  height: 4px;
+  background: var(--purple);
+  border-radius: 50%;
+  display: inline-block;
+}
+.loader-title-item.highlight {
+  color: var(--purple);
+}
+.loader-divider {
+  width: 40px;
+  height: 1px;
+  background: rgba(157, 143, 212, 0.3);
+  margin: 0.5rem 0;
+}
+.loader-progress-container {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+.loader-progress-bar-bg {
+  width: 100%;
+  height: 2px;
+  background: rgba(157, 143, 212, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.loader-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--purple);
+  transition: width 0.1s linear;
+  box-shadow: 0 0 6px var(--purple);
+}
+.loader-percent {
+  font-size: 0.7rem;
+  font-family: var(--body);
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  font-weight: 400;
+}
+.loader-status {
+  font-size: 0.7rem;
+  font-family: var(--body);
+  color: var(--purple);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+.loader-pulse {
+  width: 2px;
+  height: 2px;
+  background: var(--purple);
+  border-radius: 50%;
+  animation: pulseDot 1.5s ease infinite;
+  margin-top: 0.5rem;
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.3; transform: scale(1); box-shadow: 0 0 0 0 rgba(157,143,212,0);}
+  50% { opacity: 1; transform: scale(1.5); box-shadow: 0 0 8px 2px rgba(157,143,212,0.6);}
+}
+.main-content {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.main-content.visible {
+  opacity: 1;
+}
+
 /* ─── NOISE OVERLAY ─────────────────────────────────── */
 body::before{
   content:'';position:fixed;inset:0;
@@ -232,11 +375,9 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
   background:linear-gradient(135deg,var(--bg3),var(--bg2));
   position:relative;overflow:hidden;
 }
-.about-img-wrap img{width:100%;height:100%;object-fit:cover;border-radius:24px;opacity:0.9;}
-.about-img-wrap::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(180deg,transparent 50%,rgba(7,7,15,0.7) 100%);
-  border-radius:24px;
+.about-img-placeholder{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-size:5rem;opacity:0.15;
 }
 .about-float-badge{
   position:absolute;bottom:-1rem;right:-1rem;
@@ -248,10 +389,6 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
   font-family:var(--head);font-size:2rem;font-weight:700;color:var(--purple-light);display:block;
 }
 .about-float-badge .lbl{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;}
-.about-img-placeholder{
-  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-  font-size:5rem;opacity:0.15;
-}
 
 /* ─── SKILLS ─────────────────────────────────── */
 #skills{background:var(--bg2);}
@@ -309,30 +446,16 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
 }
 .exp-body:hover{border-color:var(--border-h);transform:translateX(4px);}
 .exp-body:hover::before{opacity:1;}
-.exp-body:hover .exp-dot{box-shadow:0 0 20px rgba(157,143,212,0.7);}
 .exp-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.8rem;flex-wrap:wrap;gap:0.5rem;}
 .exp-title{font-family:var(--head);font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:0.3rem;}
 .exp-meta{display:flex;gap:1rem;flex-wrap:wrap;}
-.exp-meta span{
-  font-size:0.75rem;color:var(--muted);
-  display:flex;align-items:center;gap:0.3rem;
-}
-.exp-date{
-  font-size:0.75rem;color:var(--purple);font-weight:500;
-  background:var(--purple-dim);padding:0.3rem 0.9rem;border-radius:100px;
-  border:1px solid rgba(157,143,212,0.2);white-space:nowrap;
-}
+.exp-meta span{font-size:0.75rem;color:var(--muted);display:flex;align-items:center;gap:0.3rem;}
+.exp-date{font-size:0.75rem;color:var(--purple);font-weight:500;background:var(--purple-dim);padding:0.3rem 0.9rem;border-radius:100px;border:1px solid rgba(157,143,212,0.2);white-space:nowrap;}
 .exp-bullets{list-style:none;margin:1rem 0;display:flex;flex-direction:column;gap:0.5rem;}
-.exp-bullets li{
-  font-size:0.88rem;color:var(--muted);padding-left:1.1rem;position:relative;line-height:1.65;
-}
+.exp-bullets li{font-size:0.88rem;color:var(--muted);padding-left:1.1rem;position:relative;line-height:1.65;}
 .exp-bullets li::before{content:'▸';position:absolute;left:0;color:var(--purple);font-size:0.7rem;top:0.2rem;}
 .exp-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem;}
-.exp-tag{
-  font-size:0.72rem;padding:0.25rem 0.75rem;border-radius:100px;
-  background:rgba(140,125,200,0.08);border:1px solid rgba(140,125,200,0.2);
-  color:var(--purple-light);font-weight:500;
-}
+.exp-tag{font-size:0.72rem;padding:0.25rem 0.75rem;border-radius:100px;background:rgba(140,125,200,0.08);border:1px solid rgba(140,125,200,0.2);color:var(--purple-light);font-weight:500;}
 
 /* ─── CONTACT ─────────────────────────────────── */
 #contact{background:var(--bg);}
@@ -390,537 +513,134 @@ footer a{color:var(--purple);text-decoration:none;}
 .stagger.visible > *:nth-child(5){opacity:1;transform:none;transition-delay:0.45s;}
 .stagger.visible > *:nth-child(6){opacity:1;transform:none;transition-delay:0.55s;}
 
-/* ─── MISC HELPERS ─────────────────────────────────── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 
-/* ─── RESPONSIVE ─────────────────────────────────── */
 @media(max-width:900px){
-  nav{padding:1rem 1.5rem;}
-  .nav-links{display:none;}
-  section{padding:5rem 1.5rem;}
-  .about-grid{grid-template-columns:1fr;gap:3rem;}
-  .about-visual{order:-1;}
-  .about-img-wrap{width:100%;height:260px;}
-  .exp-header{flex-direction:column;align-items:flex-start;gap:1rem;}
-  .hero-stats{gap:2rem;}
-  .hero-inner{text-align:center;}
-  .hero-sub{margin:0 auto 2.5rem;}
-  .hero-actions{justify-content:center;}
-  .hero-stats{justify-content:center;}
-  .contact-wrap{padding:3rem 1.5rem;}
-  footer{flex-direction:column;gap:1rem;text-align:center;}
+  nav{padding:1rem 1.5rem;}.nav-links{display:none;}section{padding:5rem 1.5rem;}.about-grid{grid-template-columns:1fr;gap:3rem;}.about-visual{order:-1;}.about-img-wrap{width:100%;height:260px;}.exp-header{flex-direction:column;align-items:flex-start;gap:1rem;}.hero-stats{gap:2rem;}.hero-inner{text-align:center;}.hero-sub{margin:0 auto 2.5rem;}.hero-actions{justify-content:center;}.hero-stats{justify-content:center;}.contact-wrap{padding:3rem 1.5rem;}footer{flex-direction:column;gap:1rem;text-align:center;}
 }
-@media(max-width:500px){
-  .hero-title{font-size:2.5rem;}
-  .section-title{font-size:1.8rem;}
-}
+@media(max-width:500px){.hero-title{font-size:2.5rem;}.section-title{font-size:1.8rem;}}
 </style>
 </head>
 <body>
 
-<!-- CURSOR -->
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-
-<!-- ORBS -->
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-<div class="orb orb3"></div>
-
-<!-- NAV -->
-<nav id="nav">
-  <a href="#hero" class="nav-logo">#<span>Priyanshu</span></a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="https://drive.google.com/file/d/17qIiZnEPTVDo8O4QQOfLCa8ixpliloCE/view?usp=drive_link" target="_blank" class="nav-cta">Resume ↗</a>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-grid-bg"></div>
-  <div class="hero-inner">
-    <div class="hero-badge">Salesforce Developer · Open to Opportunities</div>
-    <h1 class="hero-title">
-      <span class="line"><span class="word">Building</span> <span class="word grad">enterprise</span></span>
-      <span class="line"><span class="word">Salesforce</span> <span class="word">solutions</span></span>
-      <span class="line"><span class="word">that</span> <span class="word grad">scale.</span></span>
-    </h1>
-    <p class="hero-sub">
-      Hi, I'm <strong>Priyanshu Singh</strong> — a Salesforce Developer with <strong>2+ years</strong> of hands-on experience in Sales Cloud, Service Cloud, LWC, and Apex. 
-      Certified <strong>Salesforce AI Associate & AI Specialist.</strong>
-    </p>
-    <div class="hero-actions">
-      <a href="#experience" class="btn-primary">View My Work</a>
-      <a href="#contact" class="btn-outline">Get In Touch</a>
+<!-- PROFESSIONAL LOADING SCREEN WITH PERSONAL INTRO -->
+<div id="loader" class="loader-screen">
+  <div class="loader-content">
+    <div class="loader-greeting">Welcome, I'm</div>
+    <div class="loader-name">Priyanshu Singh</div>
+    <div class="loader-divider"></div>
+    <div class="loader-titles">
+      <div class="loader-title-item"><span class="bullet"></span> Salesforce Developer</div>
+      <div class="loader-title-item"><span class="bullet"></span> Creator</div>
+      <div class="loader-title-item highlight"><span class="bullet" style="background: var(--teal);"></span> Problem Solver</div>
     </div>
-    <div class="hero-stats stagger">
-      <div class="stat-item">
-        <span class="stat-num" data-count="2">0</span>
-        <span class="stat-label">Years Experience</span>
+    <div class="loader-progress-container">
+      <div class="loader-progress-bar-bg">
+        <div class="loader-progress-fill" id="progressFill"></div>
       </div>
-      <div class="stat-item">
-        <span class="stat-num" data-count="6">0</span>
-        <span class="stat-label">Projects Delivered</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num" data-count="2">0</span>
-        <span class="stat-label">Certifications</span>
-      </div>
+      <div class="loader-percent" id="percentText">0%</div>
     </div>
+    <div class="loader-status" id="statusText">Initializing experience</div>
+    <div class="loader-pulse"></div>
   </div>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span>Scroll</span>
-  </div>
-</section>
+</div>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="container">
-    <div class="section-label">About Me</div>
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <h2 class="section-title">Passionate about<br>solving real problems<br>on Salesforce.</h2>
-        <p>I'm a <strong>Salesforce Developer & Support Engineer</strong> with 2+ years of experience building and supporting enterprise-grade applications across Sales Cloud, Service Cloud, and Experience Cloud.</p>
-        <p>My work spans <strong>LWC development</strong>, complex <strong>Apex logic</strong>, third-party <strong>API integrations</strong>, and end-to-end automation using Flows and triggers. I've worked on everything from e-commerce portals to file management systems and real-time user tracking.</p>
-        <p>I'm also a <strong>Salesforce Certified AI Associate and AI Specialist</strong>, staying ahead of the curve in intelligent automation and AI-driven CRM solutions.</p>
-        <div class="cert-grid stagger">
-          <div class="cert-card">
-            <div class="cert-icon">🏅</div>
-            <div class="cert-info">
-              <h4>Salesforce Certified AI Associate</h4>
-              <p>Salesforce · Verified</p>
-            </div>
-          </div>
-          <div class="cert-card">
-            <div class="cert-icon">🏅</div>
-            <div class="cert-info">
-              <h4>Salesforce Certified AI Specialist</h4>
-              <p>Salesforce · Verified</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="about-visual reveal-right">
-        <div class="about-img-wrap">
-          <div class="about-img-placeholder">👨‍💻</div>
-        </div>
-        <div class="about-float-badge">
-          <span class="num">2+</span>
-          <span class="lbl">Years on Salesforce</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="container">
-    <div class="section-label reveal">Skills & Technologies</div>
-    <h2 class="section-title reveal">My arsenal of<br>proficiencies</h2>
-  </div>
-  <div class="skills-wrap" style="margin-top:3rem;">
-    <div class="marquee-row">
-      <div class="marquee-inner">
-        <div class="skill-pill"><span class="dot"></span>Sales Cloud</div>
-        <div class="skill-pill"><span class="dot"></span>Service Cloud</div>
-        <div class="skill-pill teal"><span class="dot"></span>Experience Cloud</div>
-        <div class="skill-pill"><span class="dot"></span>Lightning Web Components</div>
-        <div class="skill-pill teal"><span class="dot"></span>Apex Triggers</div>
-        <div class="skill-pill"><span class="dot"></span>Batch Apex</div>
-        <div class="skill-pill gold"><span class="dot"></span>Salesforce Flows</div>
-        <div class="skill-pill"><span class="dot"></span>REST API</div>
-        <div class="skill-pill teal"><span class="dot"></span>SOAP API</div>
-        <div class="skill-pill"><span class="dot"></span>Data Loader</div>
-        <div class="skill-pill gold"><span class="dot"></span>Platform Events</div>
-        <div class="skill-pill"><span class="dot"></span>Visualforce</div>
-        <!-- duplicate for seamless loop -->
-        <div class="skill-pill"><span class="dot"></span>Sales Cloud</div>
-        <div class="skill-pill"><span class="dot"></span>Service Cloud</div>
-        <div class="skill-pill teal"><span class="dot"></span>Experience Cloud</div>
-        <div class="skill-pill"><span class="dot"></span>Lightning Web Components</div>
-        <div class="skill-pill teal"><span class="dot"></span>Apex Triggers</div>
-        <div class="skill-pill"><span class="dot"></span>Batch Apex</div>
-        <div class="skill-pill gold"><span class="dot"></span>Salesforce Flows</div>
-        <div class="skill-pill"><span class="dot"></span>REST API</div>
-        <div class="skill-pill teal"><span class="dot"></span>SOAP API</div>
-        <div class="skill-pill"><span class="dot"></span>Data Loader</div>
-        <div class="skill-pill gold"><span class="dot"></span>Platform Events</div>
-        <div class="skill-pill"><span class="dot"></span>Visualforce</div>
-      </div>
-    </div>
-    <div class="marquee-row">
-      <div class="marquee-inner rev">
-        <div class="skill-pill gold"><span class="dot"></span>Custom Metadata</div>
-        <div class="skill-pill"><span class="dot"></span>Custom Labels</div>
-        <div class="skill-pill teal"><span class="dot"></span>Reports & Dashboards</div>
-        <div class="skill-pill"><span class="dot"></span>Approval Processes</div>
-        <div class="skill-pill gold"><span class="dot"></span>Validation Rules</div>
-        <div class="skill-pill"><span class="dot"></span>Profiles & Permission Sets</div>
-        <div class="skill-pill teal"><span class="dot"></span>Role Hierarchy</div>
-        <div class="skill-pill"><span class="dot"></span>VS Code</div>
-        <div class="skill-pill gold"><span class="dot"></span>Workbench</div>
-        <div class="skill-pill"><span class="dot"></span>Git / Bitbucket</div>
-        <div class="skill-pill teal"><span class="dot"></span>CI/CD</div>
-        <div class="skill-pill"><span class="dot"></span>Jira</div>
-        <!-- duplicate -->
-        <div class="skill-pill gold"><span class="dot"></span>Custom Metadata</div>
-        <div class="skill-pill"><span class="dot"></span>Custom Labels</div>
-        <div class="skill-pill teal"><span class="dot"></span>Reports & Dashboards</div>
-        <div class="skill-pill"><span class="dot"></span>Approval Processes</div>
-        <div class="skill-pill gold"><span class="dot"></span>Validation Rules</div>
-        <div class="skill-pill"><span class="dot"></span>Profiles & Permission Sets</div>
-        <div class="skill-pill teal"><span class="dot"></span>Role Hierarchy</div>
-        <div class="skill-pill"><span class="dot"></span>VS Code</div>
-        <div class="skill-pill gold"><span class="dot"></span>Workbench</div>
-        <div class="skill-pill"><span class="dot"></span>Git / Bitbucket</div>
-        <div class="skill-pill teal"><span class="dot"></span>CI/CD</div>
-        <div class="skill-pill"><span class="dot"></span>Jira</div>
-      </div>
-    </div>
-    <div class="marquee-row">
-      <div class="marquee-inner">
-        <div class="skill-pill"><span class="dot"></span>WhatsApp API</div>
-        <div class="skill-pill teal"><span class="dot"></span>Box Integration</div>
-        <div class="skill-pill"><span class="dot"></span>Google Drive API</div>
-        <div class="skill-pill gold"><span class="dot"></span>Multi-Currency</div>
-        <div class="skill-pill"><span class="dot"></span>Multi-Language</div>
-        <div class="skill-pill teal"><span class="dot"></span>Translation Workbench</div>
-        <div class="skill-pill"><span class="dot"></span>SOQL</div>
-        <div class="skill-pill gold"><span class="dot"></span>Queueable Apex</div>
-        <div class="skill-pill"><span class="dot"></span>Case Management</div>
-        <div class="skill-pill teal"><span class="dot"></span>Queue Monitoring</div>
-        <div class="skill-pill"><span class="dot"></span>PDF Generation</div>
-        <div class="skill-pill gold"><span class="dot"></span>AI Associate</div>
-        <!-- duplicate -->
-        <div class="skill-pill"><span class="dot"></span>WhatsApp API</div>
-        <div class="skill-pill teal"><span class="dot"></span>Box Integration</div>
-        <div class="skill-pill"><span class="dot"></span>Google Drive API</div>
-        <div class="skill-pill gold"><span class="dot"></span>Multi-Currency</div>
-        <div class="skill-pill"><span class="dot"></span>Multi-Language</div>
-        <div class="skill-pill teal"><span class="dot"></span>Translation Workbench</div>
-        <div class="skill-pill"><span class="dot"></span>SOQL</div>
-        <div class="skill-pill gold"><span class="dot"></span>Queueable Apex</div>
-        <div class="skill-pill"><span class="dot"></span>Case Management</div>
-        <div class="skill-pill teal"><span class="dot"></span>Queue Monitoring</div>
-        <div class="skill-pill"><span class="dot"></span>PDF Generation</div>
-        <div class="skill-pill gold"><span class="dot"></span>AI Associate</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="container">
-    <div class="exp-header reveal">
-      <div>
-        <div class="section-label">Work Experience</div>
-        <h2 class="section-title">Projects that<br>made an impact</h2>
-      </div>
-      <p class="section-desc" style="text-align:right;max-width:300px;">
-        2+ years building real-world enterprise solutions across 6 major Salesforce projects.
-      </p>
-    </div>
-
-    <div class="timeline">
-
-      <!-- Project 1 -->
-      <div class="exp-card reveal">
-        <div class="exp-dot-wrap"><div class="exp-dot"></div></div>
-        <div class="exp-body">
-          <div class="exp-top">
-            <div>
-              <div class="exp-title">Taxi Hire Service Application</div>
-              <div class="exp-meta">
-                <span>👥 Team of 10</span>
-                <span>💼 Salesforce Developer</span>
-              </div>
-            </div>
-            <span class="exp-date">Aug 2025 – Jan 2026</span>
-          </div>
-          <ul class="exp-bullets">
-            <li>Designed an Experience Cloud portal for customers to raise taxi hire requests and track booking status in real time.</li>
-            <li>Built LWC components for booking creation, ride details, fare summary, and request status tracking.</li>
-            <li>Implemented Apex triggers and Flows to manage the complete request lifecycle — booking, assignment, pickup, completion, cancellation.</li>
-            <li>Configured queues, assignment rules, and escalation rules for timely handling of requests.</li>
-            <li>Automated approval processes for special fare and corporate travel; developed Batch Apex for monthly driver payouts.</li>
-            <li>Integrated REST APIs for SMS and WhatsApp notifications; generated PDF invoices securely linked to Salesforce records.</li>
-          </ul>
-          <div class="exp-tags">
-            <span class="exp-tag">Sales Cloud</span><span class="exp-tag">Experience Cloud</span>
-            <span class="exp-tag">LWC</span><span class="exp-tag">Apex</span>
-            <span class="exp-tag">Batch Apex</span><span class="exp-tag">REST API</span>
-            <span class="exp-tag">Flows</span><span class="exp-tag">Data Loader</span><span class="exp-tag">Jira</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 2 -->
-      <div class="exp-card reveal">
-        <div class="exp-dot-wrap"><div class="exp-dot"></div></div>
-        <div class="exp-body">
-          <div class="exp-top">
-            <div>
-              <div class="exp-title">Smart Order Processing Application</div>
-              <div class="exp-meta">
-                <span>👥 Team of 12</span>
-                <span>💼 Salesforce Developer</span>
-              </div>
-            </div>
-            <span class="exp-date">Jan 2025 – Jul 2025</span>
-          </div>
-          <ul class="exp-bullets">
-            <li>Built a self-service Experience Cloud portal for customers/partners to place orders and maintain stock history.</li>
-            <li>Developed LWC components for product selection, order review, and invoice display with reusable modals and dynamic data tables.</li>
-            <li>Implemented Apex triggers for stock validation, duplicate checks, and discount eligibility before insert/update.</li>
-            <li>Integrated Google Drive API to automatically upload and store generated invoices directly from Salesforce records.</li>
-            <li>Automated email notifications for order confirmation, approval, and shipment; optimized SOQL for bulk processing.</li>
-          </ul>
-          <div class="exp-tags">
-            <span class="exp-tag">Experience Cloud</span><span class="exp-tag">LWC</span>
-            <span class="exp-tag">Apex</span><span class="exp-tag">Google Drive API</span>
-            <span class="exp-tag">Flows</span><span class="exp-tag">Bitbucket</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 3 -->
-      <div class="exp-card reveal">
-        <div class="exp-dot-wrap"><div class="exp-dot"></div></div>
-        <div class="exp-body">
-          <div class="exp-top">
-            <div>
-              <div class="exp-title">E-Commerce Portal — Agriculture Domain</div>
-              <div class="exp-meta">
-                <span>👥 Team of 5</span>
-                <span>💼 Salesforce Developer</span>
-              </div>
-            </div>
-            <span class="exp-date">Nov 2024 – Dec 2024</span>
-          </div>
-          <ul class="exp-bullets">
-            <li>Designed an Experience Cloud e-commerce site for global customers with multi-currency and multi-language support.</li>
-            <li>Implemented Translation Workbench and custom labels for a localized user experience across regions.</li>
-            <li>Built LWC components for product catalog, shopping cart, checkout flow, and customer order history.</li>
-            <li>Developed Apex logic and triggers for inventory validation, price adjustments, tax calculation, and order processing.</li>
-          </ul>
-          <div class="exp-tags">
-            <span class="exp-tag">Sales Cloud</span><span class="exp-tag">Experience Cloud</span>
-            <span class="exp-tag">LWC</span><span class="exp-tag">Multi-Currency</span>
-            <span class="exp-tag">Multi-Language</span><span class="exp-tag">Apex</span><span class="exp-tag">Git</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 4 -->
-      <div class="exp-card reveal">
-        <div class="exp-dot-wrap"><div class="exp-dot"></div></div>
-        <div class="exp-body">
-          <div class="exp-top">
-            <div>
-              <div class="exp-title">File Management System — Box Integration</div>
-              <div class="exp-meta">
-                <span>👥 Team of 8</span>
-                <span>💼 Salesforce Developer</span>
-              </div>
-            </div>
-            <span class="exp-date">Aug 2024 – Oct 2024</span>
-          </div>
-          <ul class="exp-bullets">
-            <li>Designed a file management solution to offload large file storage from Salesforce to Box, significantly reducing storage costs.</li>
-            <li>Integrated Salesforce with Box API to automatically store, retrieve, and manage files outside Salesforce.</li>
-            <li>Built LWC components to upload, preview, and share documents with embedded file previews within Salesforce records.</li>
-            <li>Implemented dynamic file naming logic based on related objects (Account, Opportunity, Case) for consistent organization.</li>
-          </ul>
-          <div class="exp-tags">
-            <span class="exp-tag">Sales Cloud</span><span class="exp-tag">Experience Cloud</span>
-            <span class="exp-tag">LWC</span><span class="exp-tag">Box API</span>
-            <span class="exp-tag">Apex</span><span class="exp-tag">Git</span><span class="exp-tag">Jira</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 5 -->
-      <div class="exp-card reveal">
-        <div class="exp-dot-wrap"><div class="exp-dot"></div></div>
-        <div class="exp-body">
-          <div class="exp-top">
-            <div>
-              <div class="exp-title">User Tracking System</div>
-              <div class="exp-meta">
-                <span>👥 Team of 5</span>
-                <span>💼 Salesforce Developer</span>
-              </div>
-            </div>
-            <span class="exp-date">May 2024 – Jul 2025</span>
-          </div>
-          <ul class="exp-bullets">
-            <li>Developed a tracking system to monitor and analyze user activity — login/logout, record changes, and key actions in real time.</li>
-            <li>Built LWC dashboards to display user activity logs, last login, and frequently accessed objects for admins and managers.</li>
-            <li>Integrated custom metadata to configure trackable objects and fields without code changes.</li>
-            <li>Enhanced security and audit compliance with a comprehensive activity trail; batched archiving to keep dashboards responsive.</li>
-          </ul>
-          <div class="exp-tags">
-            <span class="exp-tag">Sales Cloud</span><span class="exp-tag">Service Cloud</span>
-            <span class="exp-tag">LWC</span><span class="exp-tag">Platform Events</span>
-            <span class="exp-tag">Custom Metadata</span><span class="exp-tag">Apex</span><span class="exp-tag">Jira</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 6 -->
-      <div class="exp-card reveal">
-        <div class="exp-dot-wrap"><div class="exp-dot"></div></div>
-        <div class="exp-body">
-          <div class="exp-top">
-            <div>
-              <div class="exp-title">User Management — 3rd-Party Integration</div>
-              <div class="exp-meta">
-                <span>👥 Team of 5</span>
-                <span>💼 Salesforce Developer</span>
-              </div>
-            </div>
-            <span class="exp-date">Feb 2024 – Apr 2024</span>
-          </div>
-          <ul class="exp-bullets">
-            <li>Built a user management system to sync Salesforce users with an external 3rd-party application via REST APIs in real time.</li>
-            <li>Implemented Apex triggers and batch jobs to automatically reflect profile updates, status changes, and account transfers.</li>
-            <li>Enabled bi-directional sync ensuring data consistency across both Salesforce and the external system.</li>
-            <li>Improved compliance and reduced manual admin work by automating user provisioning, deactivation, and role synchronization.</li>
-          </ul>
-          <div class="exp-tags">
-            <span class="exp-tag">Sales Cloud</span><span class="exp-tag">Service Cloud</span>
-            <span class="exp-tag">LWC</span><span class="exp-tag">REST API</span>
-            <span class="exp-tag">Platform Events</span><span class="exp-tag">Apex</span><span class="exp-tag">Jira</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="container">
-    <div class="contact-wrap reveal">
-      <div class="section-label" style="justify-content:center;margin-bottom:1rem;">Say Hello</div>
-      <h2 class="section-title">Don't be a stranger 👋</h2>
-      <p>Let's connect and build something amazing together. Whether it's a new project, collaboration, or just a conversation about Salesforce.</p>
-      <div class="contact-links">
-        <a href="https://www.linkedin.com/in/priyanshu08singh/" target="_blank" class="contact-link">
-          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-          LinkedIn
-        </a>
-        <a href="https://github.com/Priyanshusingh08" target="_blank" class="contact-link">
-          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-          GitHub
-        </a>
-        <a href="https://leetcode.com/u/Priyanshu_singh08/" target="_blank" class="contact-link">
-          <svg viewBox="0 0 24 24"><path d="M16.102 17.93l-2.697 2.607c-.466.467-1.111.662-1.823.662s-1.357-.195-1.823-.662l-4.979-4.962c-.955-.988-.955-2.498 0-3.486l4.893-4.8c.466-.467 1.111-.756 1.823-.756s1.357.289 1.823.756l2.697 2.61c.911.893 2.204.993 3.008.607l-3.221-3.268c-.666-.649-1.6-1.041-2.625-1.041-.988 0-1.96.39-2.625 1.041l-5.183 5.083c-.677.663-1.017 1.544-1.017 2.455 0 .911.34 1.792 1.017 2.455l4.99 4.976c.665.65 1.637 1.041 2.625 1.041s1.96-.391 2.625-1.041l3.223-3.27c-.803.387-2.097.287-3.009-.608z"/><path d="M20.811 13.01H10.666c-.702 0-1.27.604-1.27 1.346s.568 1.346 1.27 1.346h10.145c.701 0 1.27-.604 1.27-1.346s-.569-1.346-1.27-1.346z"/></svg>
-          LeetCode
-        </a>
-        <a href="mailto:priyanshu@example.com" class="contact-link">
-          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          Email Me
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <span>© 2026 <a href="#hero">#Priyanshu8102</a> · Designed & Developed by Priyanshu Singh</span>
-  <button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Back to top</button>
-</footer>
+<div class="main-content" id="mainContent">
+  <div id="cursor"></div><div id="cursor-ring"></div>
+  <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+  
+  <nav id="nav"><a href="#hero" class="nav-logo">#<span>Priyanshu</span></a><ul class="nav-links"><li><a href="#about">About</a></li><li><a href="#skills">Skills</a></li><li><a href="#experience">Experience</a></li><li><a href="#contact">Contact</a></li></ul><a href="https://drive.google.com/file/d/17qIiZnEPTVDo8O4QQOfLCa8ixpliloCE/view?usp=drive_link" target="_blank" class="nav-cta">Resume ↗</a></nav>
+  
+  <section id="hero"><div class="hero-grid-bg"></div><div class="hero-inner"><div class="hero-badge">Salesforce Developer · Open to Opportunities</div><h1 class="hero-title"><span class="line"><span class="word">Building</span> <span class="word grad">enterprise</span></span><span class="line"><span class="word">Salesforce</span> <span class="word">solutions</span></span><span class="line"><span class="word">that</span> <span class="word grad">scale.</span></span></h1><p class="hero-sub">Hi, I'm <strong>Priyanshu Singh</strong> — a Salesforce Developer with <strong>2+ years</strong> of hands-on experience in Sales Cloud, Service Cloud, LWC, and Apex. Certified <strong>Salesforce AI Associate & AI Specialist.</strong></p><div class="hero-actions"><a href="#experience" class="btn-primary">View My Work</a><a href="#contact" class="btn-outline">Get In Touch</a></div><div class="hero-stats stagger"><div class="stat-item"><span class="stat-num" data-count="2">0</span><span class="stat-label">Years Experience</span></div><div class="stat-item"><span class="stat-num" data-count="6">0</span><span class="stat-label">Projects Delivered</span></div><div class="stat-item"><span class="stat-num" data-count="2">0</span><span class="stat-label">Certifications</span></div></div></div><div class="hero-scroll"><div class="scroll-line"></div><span>Scroll</span></div></section>
+  
+  <section id="about"><div class="container"><div class="section-label">About Me</div><div class="about-grid"><div class="about-text reveal"><h2 class="section-title">Passionate about<br>solving real problems<br>on Salesforce.</h2><p>I'm a <strong>Salesforce Developer & Support Engineer</strong> with 2+ years of experience building and supporting enterprise-grade applications across Sales Cloud, Service Cloud, and Experience Cloud.</p><p>My work spans <strong>LWC development</strong>, complex <strong>Apex logic</strong>, third-party <strong>API integrations</strong>, and end-to-end automation using Flows and triggers. I've worked on everything from e-commerce portals to file management systems and real-time user tracking.</p><p>I'm also a <strong>Salesforce Certified AI Associate and AI Specialist</strong>, staying ahead of the curve in intelligent automation and AI-driven CRM solutions.</p><div class="cert-grid stagger"><div class="cert-card"><div class="cert-icon">🏅</div><div class="cert-info"><h4>Salesforce Certified AI Associate</h4><p>Salesforce · Verified</p></div></div><div class="cert-card"><div class="cert-icon">🏅</div><div class="cert-info"><h4>Salesforce Certified AI Specialist</h4><p>Salesforce · Verified</p></div></div></div></div><div class="about-visual reveal-right"><div class="about-img-wrap"><div class="about-img-placeholder">👨‍💻</div></div><div class="about-float-badge"><span class="num">2+</span><span class="lbl">Years on Salesforce</span></div></div></div></div></section>
+  
+  <section id="skills"><div class="container"><div class="section-label reveal">Skills & Technologies</div><h2 class="section-title reveal">My arsenal of<br>proficiencies</h2></div><div class="skills-wrap" style="margin-top:3rem;"><div class="marquee-row"><div class="marquee-inner"><div class="skill-pill"><span class="dot"></span>Sales Cloud</div><div class="skill-pill"><span class="dot"></span>Service Cloud</div><div class="skill-pill teal"><span class="dot"></span>Experience Cloud</div><div class="skill-pill"><span class="dot"></span>Lightning Web Components</div><div class="skill-pill teal"><span class="dot"></span>Apex Triggers</div><div class="skill-pill"><span class="dot"></span>Batch Apex</div><div class="skill-pill gold"><span class="dot"></span>Salesforce Flows</div><div class="skill-pill"><span class="dot"></span>REST API</div><div class="skill-pill teal"><span class="dot"></span>SOAP API</div><div class="skill-pill"><span class="dot"></span>Data Loader</div><div class="skill-pill gold"><span class="dot"></span>Platform Events</div><div class="skill-pill"><span class="dot"></span>Visualforce</div><div class="skill-pill"><span class="dot"></span>Sales Cloud</div><div class="skill-pill"><span class="dot"></span>Service Cloud</div><div class="skill-pill teal"><span class="dot"></span>Experience Cloud</div><div class="skill-pill"><span class="dot"></span>Lightning Web Components</div><div class="skill-pill teal"><span class="dot"></span>Apex Triggers</div><div class="skill-pill"><span class="dot"></span>Batch Apex</div><div class="skill-pill gold"><span class="dot"></span>Salesforce Flows</div><div class="skill-pill"><span class="dot"></span>REST API</div><div class="skill-pill teal"><span class="dot"></span>SOAP API</div><div class="skill-pill"><span class="dot"></span>Data Loader</div><div class="skill-pill gold"><span class="dot"></span>Platform Events</div><div class="skill-pill"><span class="dot"></span>Visualforce</div></div></div><div class="marquee-row"><div class="marquee-inner rev"><div class="skill-pill gold"><span class="dot"></span>Custom Metadata</div><div class="skill-pill"><span class="dot"></span>Custom Labels</div><div class="skill-pill teal"><span class="dot"></span>Reports & Dashboards</div><div class="skill-pill"><span class="dot"></span>Approval Processes</div><div class="skill-pill gold"><span class="dot"></span>Validation Rules</div><div class="skill-pill"><span class="dot"></span>Profiles & Permission Sets</div><div class="skill-pill teal"><span class="dot"></span>Role Hierarchy</div><div class="skill-pill"><span class="dot"></span>VS Code</div><div class="skill-pill gold"><span class="dot"></span>Workbench</div><div class="skill-pill"><span class="dot"></span>Git / Bitbucket</div><div class="skill-pill teal"><span class="dot"></span>CI/CD</div><div class="skill-pill"><span class="dot"></span>Jira</div><div class="skill-pill gold"><span class="dot"></span>Custom Metadata</div><div class="skill-pill"><span class="dot"></span>Custom Labels</div><div class="skill-pill teal"><span class="dot"></span>Reports & Dashboards</div><div class="skill-pill"><span class="dot"></span>Approval Processes</div><div class="skill-pill gold"><span class="dot"></span>Validation Rules</div><div class="skill-pill"><span class="dot"></span>Profiles & Permission Sets</div><div class="skill-pill teal"><span class="dot"></span>Role Hierarchy</div><div class="skill-pill"><span class="dot"></span>VS Code</div><div class="skill-pill gold"><span class="dot"></span>Workbench</div><div class="skill-pill"><span class="dot"></span>Git / Bitbucket</div><div class="skill-pill teal"><span class="dot"></span>CI/CD</div><div class="skill-pill"><span class="dot"></span>Jira</div></div></div><div class="marquee-row"><div class="marquee-inner"><div class="skill-pill"><span class="dot"></span>WhatsApp API</div><div class="skill-pill teal"><span class="dot"></span>Box Integration</div><div class="skill-pill"><span class="dot"></span>Google Drive API</div><div class="skill-pill gold"><span class="dot"></span>Multi-Currency</div><div class="skill-pill"><span class="dot"></span>Multi-Language</div><div class="skill-pill teal"><span class="dot"></span>Translation Workbench</div><div class="skill-pill"><span class="dot"></span>SOQL</div><div class="skill-pill gold"><span class="dot"></span>Queueable Apex</div><div class="skill-pill"><span class="dot"></span>Case Management</div><div class="skill-pill teal"><span class="dot"></span>Queue Monitoring</div><div class="skill-pill"><span class="dot"></span>PDF Generation</div><div class="skill-pill gold"><span class="dot"></span>AI Associate</div><div class="skill-pill"><span class="dot"></span>WhatsApp API</div><div class="skill-pill teal"><span class="dot"></span>Box Integration</div><div class="skill-pill"><span class="dot"></span>Google Drive API</div><div class="skill-pill gold"><span class="dot"></span>Multi-Currency</div><div class="skill-pill"><span class="dot"></span>Multi-Language</div><div class="skill-pill teal"><span class="dot"></span>Translation Workbench</div><div class="skill-pill"><span class="dot"></span>SOQL</div><div class="skill-pill gold"><span class="dot"></span>Queueable Apex</div><div class="skill-pill"><span class="dot"></span>Case Management</div><div class="skill-pill teal"><span class="dot"></span>Queue Monitoring</div><div class="skill-pill"><span class="dot"></span>PDF Generation</div><div class="skill-pill gold"><span class="dot"></span>AI Associate</div></div></div></div></section>
+  
+  <section id="experience"><div class="container"><div class="exp-header reveal"><div><div class="section-label">Work Experience</div><h2 class="section-title">Projects that<br>made an impact</h2></div><p class="section-desc" style="text-align:right;max-width:300px;">2+ years building real-world enterprise solutions across 6 major Salesforce projects.</p></div><div class="timeline"><div class="exp-card reveal"><div class="exp-dot-wrap"><div class="exp-dot"></div></div><div class="exp-body"><div class="exp-top"><div><div class="exp-title">Taxi Hire Service Application</div><div class="exp-meta"><span>👥 Team of 10</span><span>💼 Salesforce Developer</span></div></div><span class="exp-date">Aug 2025 – Jan 2026</span></div><ul class="exp-bullets"><li>Designed an Experience Cloud portal for customers to raise taxi hire requests and track booking status in real time.</li><li>Built LWC components for booking creation, ride details, fare summary, and request status tracking.</li><li>Implemented Apex triggers and Flows to manage the complete request lifecycle — booking, assignment, pickup, completion, cancellation.</li><li>Configured queues, assignment rules, and escalation rules for timely handling of requests.</li><li>Automated approval processes for special fare and corporate travel; developed Batch Apex for monthly driver payouts.</li><li>Integrated REST APIs for SMS and WhatsApp notifications; generated PDF invoices securely linked to Salesforce records.</li></ul><div class="exp-tags"><span class="exp-tag">Sales Cloud</span><span class="exp-tag">Experience Cloud</span><span class="exp-tag">LWC</span><span class="exp-tag">Apex</span><span class="exp-tag">Batch Apex</span><span class="exp-tag">REST API</span><span class="exp-tag">Flows</span><span class="exp-tag">Data Loader</span><span class="exp-tag">Jira</span></div></div></div><div class="exp-card reveal"><div class="exp-dot-wrap"><div class="exp-dot"></div></div><div class="exp-body"><div class="exp-top"><div><div class="exp-title">Smart Order Processing Application</div><div class="exp-meta"><span>👥 Team of 12</span><span>💼 Salesforce Developer</span></div></div><span class="exp-date">Jan 2025 – Jul 2025</span></div><ul class="exp-bullets"><li>Built a self-service Experience Cloud portal for customers/partners to place orders and maintain stock history.</li><li>Developed LWC components for product selection, order review, and invoice display with reusable modals and dynamic data tables.</li><li>Implemented Apex triggers for stock validation, duplicate checks, and discount eligibility before insert/update.</li><li>Integrated Google Drive API to automatically upload and store generated invoices directly from Salesforce records.</li><li>Automated email notifications for order confirmation, approval, and shipment; optimized SOQL for bulk processing.</li></ul><div class="exp-tags"><span class="exp-tag">Experience Cloud</span><span class="exp-tag">LWC</span><span class="exp-tag">Apex</span><span class="exp-tag">Google Drive API</span><span class="exp-tag">Flows</span><span class="exp-tag">Bitbucket</span></div></div></div><div class="exp-card reveal"><div class="exp-dot-wrap"><div class="exp-dot"></div></div><div class="exp-body"><div class="exp-top"><div><div class="exp-title">E-Commerce Portal — Agriculture Domain</div><div class="exp-meta"><span>👥 Team of 5</span><span>💼 Salesforce Developer</span></div></div><span class="exp-date">Nov 2024 – Dec 2024</span></div><ul class="exp-bullets"><li>Designed an Experience Cloud e-commerce site for global customers with multi-currency and multi-language support.</li><li>Implemented Translation Workbench and custom labels for a localized user experience across regions.</li><li>Built LWC components for product catalog, shopping cart, checkout flow, and customer order history.</li><li>Developed Apex logic and triggers for inventory validation, price adjustments, tax calculation, and order processing.</li></ul><div class="exp-tags"><span class="exp-tag">Sales Cloud</span><span class="exp-tag">Experience Cloud</span><span class="exp-tag">LWC</span><span class="exp-tag">Multi-Currency</span><span class="exp-tag">Multi-Language</span><span class="exp-tag">Apex</span><span class="exp-tag">Git</span></div></div></div><div class="exp-card reveal"><div class="exp-dot-wrap"><div class="exp-dot"></div></div><div class="exp-body"><div class="exp-top"><div><div class="exp-title">File Management System — Box Integration</div><div class="exp-meta"><span>👥 Team of 8</span><span>💼 Salesforce Developer</span></div></div><span class="exp-date">Aug 2024 – Oct 2024</span></div><ul class="exp-bullets"><li>Designed a file management solution to offload large file storage from Salesforce to Box, significantly reducing storage costs.</li><li>Integrated Salesforce with Box API to automatically store, retrieve, and manage files outside Salesforce.</li><li>Built LWC components to upload, preview, and share documents with embedded file previews within Salesforce records.</li><li>Implemented dynamic file naming logic based on related objects (Account, Opportunity, Case) for consistent organization.</li></ul><div class="exp-tags"><span class="exp-tag">Sales Cloud</span><span class="exp-tag">Experience Cloud</span><span class="exp-tag">LWC</span><span class="exp-tag">Box API</span><span class="exp-tag">Apex</span><span class="exp-tag">Git</span><span class="exp-tag">Jira</span></div></div></div><div class="exp-card reveal"><div class="exp-dot-wrap"><div class="exp-dot"></div></div><div class="exp-body"><div class="exp-top"><div><div class="exp-title">User Tracking System</div><div class="exp-meta"><span>👥 Team of 5</span><span>💼 Salesforce Developer</span></div></div><span class="exp-date">May 2024 – Jul 2025</span></div><ul class="exp-bullets"><li>Developed a tracking system to monitor and analyze user activity — login/logout, record changes, and key actions in real time.</li><li>Built LWC dashboards to display user activity logs, last login, and frequently accessed objects for admins and managers.</li><li>Integrated custom metadata to configure trackable objects and fields without code changes.</li><li>Enhanced security and audit compliance with a comprehensive activity trail; batched archiving to keep dashboards responsive.</li></ul><div class="exp-tags"><span class="exp-tag">Sales Cloud</span><span class="exp-tag">Service Cloud</span><span class="exp-tag">LWC</span><span class="exp-tag">Platform Events</span><span class="exp-tag">Custom Metadata</span><span class="exp-tag">Apex</span><span class="exp-tag">Jira</span></div></div></div><div class="exp-card reveal"><div class="exp-dot-wrap"><div class="exp-dot"></div></div><div class="exp-body"><div class="exp-top"><div><div class="exp-title">User Management — 3rd-Party Integration</div><div class="exp-meta"><span>👥 Team of 5</span><span>💼 Salesforce Developer</span></div></div><span class="exp-date">Feb 2024 – Apr 2024</span></div><ul class="exp-bullets"><li>Built a user management system to sync Salesforce users with an external 3rd-party application via REST APIs in real time.</li><li>Implemented Apex triggers and batch jobs to automatically reflect profile updates, status changes, and account transfers.</li><li>Enabled bi-directional sync ensuring data consistency across both Salesforce and the external system.</li><li>Improved compliance and reduced manual admin work by automating user provisioning, deactivation, and role synchronization.</li></ul><div class="exp-tags"><span class="exp-tag">Sales Cloud</span><span class="exp-tag">Service Cloud</span><span class="exp-tag">LWC</span><span class="exp-tag">REST API</span><span class="exp-tag">Platform Events</span><span class="exp-tag">Apex</span><span class="exp-tag">Jira</span></div></div></div></div></div></section>
+  
+  <section id="contact"><div class="container"><div class="contact-wrap reveal"><div class="section-label" style="justify-content:center;margin-bottom:1rem;">Say Hello</div><h2 class="section-title">Don't be a stranger 👋</h2><p>Let's connect and build something amazing together. Whether it's a new project, collaboration, or just a conversation about Salesforce.</p><div class="contact-links"><a href="https://www.linkedin.com/in/priyanshu08singh/" target="_blank" class="contact-link"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a><a href="https://github.com/Priyanshusingh08" target="_blank" class="contact-link"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>GitHub</a><a href="https://leetcode.com/u/Priyanshu_singh08/" target="_blank" class="contact-link"><svg viewBox="0 0 24 24"><path d="M16.102 17.93l-2.697 2.607c-.466.467-1.111.662-1.823.662s-1.357-.195-1.823-.662l-4.979-4.962c-.955-.988-.955-2.498 0-3.486l4.893-4.8c.466-.467 1.111-.756 1.823-.756s1.357.289 1.823.756l2.697 2.61c.911.893 2.204.993 3.008.607l-3.221-3.268c-.666-.649-1.6-1.041-2.625-1.041-.988 0-1.96.39-2.625 1.041l-5.183 5.083c-.677.663-1.017 1.544-1.017 2.455 0 .911.34 1.792 1.017 2.455l4.99 4.976c.665.65 1.637 1.041 2.625 1.041s1.96-.391 2.625-1.041l3.223-3.27c-.803.387-2.097.287-3.009-.608z"/><path d="M20.811 13.01H10.666c-.702 0-1.27.604-1.27 1.346s.568 1.346 1.27 1.346h10.145c.701 0 1.27-.604 1.27-1.346s-.569-1.346-1.27-1.346z"/></svg>LeetCode</a><a href="mailto:priyanshu@example.com" class="contact-link"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email Me</a></div></div></div></section>
+  
+  <footer><span>© 2026 <a href="#hero">#Priyanshu8102</a> · Designed & Developed by Priyanshu Singh</span><button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Back to top</button></footer>
+</div>
 
 <script>
-// ── CURSOR ──────────────────────────────────
+// Professional loader with personalized intro and sequential status
+const loader = document.getElementById('loader');
+const mainContent = document.getElementById('mainContent');
+const progressFill = document.getElementById('progressFill');
+const percentText = document.getElementById('percentText');
+const statusText = document.getElementById('statusText');
+
+const statusMessages = [
+  'Loading portfolio', 
+  'Connecting to Salesforce', 
+  'Compiling components', 
+  'Almost there', 
+  'Welcome aboard'
+];
+let progress = 0;
+let msgIndex = 0;
+
+const interval = setInterval(() => {
+  progress += Math.floor(Math.random() * 5) + 2;
+  if (progress >= 100) {
+    progress = 100;
+    clearInterval(interval);
+    if (progressFill) progressFill.style.width = '100%';
+    if (percentText) percentText.innerText = '100%';
+    if (statusText) statusText.innerText = 'Experience ready';
+    setTimeout(() => {
+      loader.classList.add('hide');
+      mainContent.classList.add('visible');
+      initObserversAndCounters();
+    }, 250);
+  }
+  if (progressFill) progressFill.style.width = progress + '%';
+  if (percentText) percentText.innerText = progress + '%';
+  
+  if (progress > 15 && msgIndex === 0) { statusText.innerText = statusMessages[1]; msgIndex = 1; }
+  if (progress > 40 && msgIndex === 1) { statusText.innerText = statusMessages[2]; msgIndex = 2; }
+  if (progress > 65 && msgIndex === 2) { statusText.innerText = statusMessages[3]; msgIndex = 3; }
+  if (progress > 85 && msgIndex === 3) { statusText.innerText = statusMessages[4]; msgIndex = 4; }
+}, 70);
+
+// Fallback timeout safety
+setTimeout(() => {
+  if (loader && !loader.classList.contains('hide')) {
+    clearInterval(interval);
+    loader.classList.add('hide');
+    mainContent.classList.add('visible');
+    initObserversAndCounters();
+  }
+}, 4200);
+
+// Cursor & nav logic
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursor-ring');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX; my=e.clientY;
-  cursor.style.left=mx+'px'; cursor.style.top=my+'px';
-});
-(function animRing(){
-  rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
-  ring.style.left=rx+'px'; ring.style.top=ry+'px';
-  requestAnimationFrame(animRing);
-})();
+document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; if(cursor){ cursor.style.left=mx+'px'; cursor.style.top=my+'px'; } });
+(function animRing(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; if(ring){ ring.style.left=rx+'px'; ring.style.top=ry+'px'; } requestAnimationFrame(animRing); })();
 document.querySelectorAll('a,button,.exp-body,.cert-card,.skill-pill').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{
-    cursor.style.transform='translate(-50%,-50%) scale(2.5)';
-    cursor.style.background='rgba(157,143,212,0.4)';
-    ring.style.opacity='0';
-  });
-  el.addEventListener('mouseleave',()=>{
-    cursor.style.transform='translate(-50%,-50%) scale(1)';
-    cursor.style.background='var(--purple)';
-    ring.style.opacity='1';
-  });
+  el.addEventListener('mouseenter',()=>{ if(cursor){ cursor.style.transform='translate(-50%,-50%) scale(2.5)'; cursor.style.background='rgba(157,143,212,0.4)'; } if(ring) ring.style.opacity='0'; });
+  el.addEventListener('mouseleave',()=>{ if(cursor){ cursor.style.transform='translate(-50%,-50%) scale(1)'; cursor.style.background='var(--purple)'; } if(ring) ring.style.opacity='1'; });
 });
-
-// ── NAV SCROLL ──────────────────────────────────
 const nav = document.getElementById('nav');
-window.addEventListener('scroll',()=>{
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-});
+window.addEventListener('scroll',()=>{ if(nav) nav.classList.toggle('scrolled', window.scrollY > 60); });
 
-// ── COUNTER ANIMATION ──────────────────────────────────
-function animCount(el){
-  const target=+el.dataset.count;
-  const suffix=el.textContent.includes('+') ? '+' : '';
-  let cur=0;
-  const step=()=>{
-    cur+=Math.ceil(target/30);
-    if(cur>=target){ el.textContent=target+'+'; return; }
-    el.textContent=cur+'+';
-    requestAnimationFrame(step);
-  };
-  step();
+function animCount(el){ const target=+el.dataset.count; let cur=0; const step=()=>{ cur+=Math.ceil(target/30); if(cur>=target){ el.textContent=target+'+'; return; } el.textContent=cur+'+'; requestAnimationFrame(step); }; step(); }
+
+let obs, staggerObs;
+function initObserversAndCounters(){
+  if(obs) obs.disconnect();
+  obs = new IntersectionObserver((entries)=>{ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('visible'); entry.target.querySelectorAll('[data-count]').forEach(animCount); obs.unobserve(entry.target); } }); },{threshold:0.12});
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stagger').forEach(el=>obs.observe(el));
+  staggerObs = new IntersectionObserver((entries)=>{ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('visible'); staggerObs.unobserve(entry.target); } }); },{threshold:0.1});
+  document.querySelectorAll('.stagger').forEach(el=>staggerObs.observe(el));
+  document.querySelectorAll('[data-count]').forEach(el=>{ const rect=el.getBoundingClientRect(); if(rect.top < window.innerHeight) animCount(el); });
 }
-
-// ── INTERSECTION OBSERVER ──────────────────────────────────
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-      // trigger counters
-      entry.target.querySelectorAll('[data-count]').forEach(animCount);
-      observer.unobserve(entry.target);
-    }
-  });
-},{threshold:0.12});
-
-document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stagger').forEach(el=>observer.observe(el));
-
-// stagger children trigger
-const staggerObs = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-      staggerObs.unobserve(entry.target);
-    }
-  });
-},{threshold:0.1});
-document.querySelectorAll('.stagger').forEach(el=>staggerObs.observe(el));
-
-// ── HERO STATS: trigger immediately if in view ──────────────────────────────────
-setTimeout(()=>{
-  document.querySelectorAll('[data-count]').forEach(el=>{
-    const rect=el.getBoundingClientRect();
-    if(rect.top < window.innerHeight){ animCount(el); }
-  });
-},800);
+setTimeout(()=>{ if(mainContent.classList.contains('visible')) initObserversAndCounters(); }, 300);
 </script>
 </body>
 </html>
